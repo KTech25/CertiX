@@ -1,62 +1,54 @@
 from PIL import Image, ImageDraw, ImageFont
 
 
-def generate_certificate(name):
-    # Load certificate template image
-    # Replace "certificate_template.png" with your template image path
-    certificate_img = Image.open("certificate_template2.png")
+class certificategenerator:
+    def __init__(self):
+        # self.name = input("Enter your name: ")
+        self.templateno = int(input("Enter template number: "))
+        self.name = "Karan Kumar Agrawal"
+        self.generate_certificate(self.name, self.templateno)
 
-    # Initialize drawing context
-    draw = ImageDraw.Draw(certificate_img)
+    def generate_certificate(self, name, templateno):
+        if (templateno == 1):
+            certificate_img = Image.open("templates/certificate_template.png")
+            draw = ImageDraw.Draw(certificate_img)
+            font_path = "fonts/BrittanySignature.ttf"
 
-    # Load font
-    # font_path = "BrittanySignature.ttf"
-    font_path = "horizon.otf"
-    font = ImageFont.truetype(font_path, 60)
+            text = name
+            font = ImageFont.truetype(font_path, 500)
+            text_position = (
+                (certificate_img.width - draw.textlength(text, font=font)) / 2, 1800)
+            draw.text(text_position, text, fill="black", font=font)
 
-    # Calculate text position
-    # text = "Certificate of Completion"
-    # text_position = ((certificate_img.width - draw.textlength(text, font=font)) / 2, 100)
+        elif (templateno == 2):
+            certificate_img = Image.open("templates/certificate_template2.png")
+            draw = ImageDraw.Draw(certificate_img)
+            font_path = "fonts/horizon.otf"
 
-    # Draw text
-    # draw.text(text_position, text, fill="black", font=font)
+            certificate_text = name
+            certificate_font = ImageFont.truetype(font_path, 200)
+            certificate_text_position = (
+                (certificate_img.width - draw.textlength(certificate_text, font=certificate_font)) / 2, 2100)
+            draw.text(certificate_text_position, certificate_text,
+                      fill="white", font=certificate_font)
 
-    certificate_text = name
-    certificate_font = ImageFont.truetype(font_path, 200)
-    certificate_text_position = (
-        (certificate_img.width - draw.textlength(certificate_text, font=certificate_font)) / 2, 2100)
+            certificate_text = "This certificate is awarded to his/her for participating in"
+            certificate_font = ImageFont.truetype(font_path, 75)
+            certificate_text_position = (
+                (certificate_img.width - draw.textlength(certificate_text, font=certificate_font)) / 2, 2500)
+            draw.text(certificate_text_position, certificate_text,
+                      fill="white", font=certificate_font)
 
-    draw.text(certificate_text_position, certificate_text,
-              fill="white", font=certificate_font)
+            certificate_text = "MIRAGE 1.0"
+            certificate_font = ImageFont.truetype(font_path, 75)
+            certificate_text_position = (
+                (certificate_img.width - draw.textlength(certificate_text, font=certificate_font)) / 2, 2600)
+            draw.text(certificate_text_position, certificate_text,
+                      fill="white", font=certificate_font)
 
-    certificate_text = "This certificate is awarded to her/his for being winner of Fauget Esport Tournament"
-
-    certificate_font = ImageFont.truetype(font_path, 50)
-    certificate_text_position = (
-        (certificate_img.width - draw.textlength(certificate_text, font=certificate_font)) / 2, 2500)
-
-    draw.text(certificate_text_position, certificate_text,
-              fill="white", font=certificate_font)
-
-    certificate_text = "Fauget Esport Tournament"
-
-    certificate_font = ImageFont.truetype(font_path, 50)
-    certificate_text_position = (
-        (certificate_img.width - draw.textlength(certificate_text, font=certificate_font)) / 2, 2500)
-
-    draw.text(certificate_text_position, certificate_text,
-              fill="white", font=certificate_font)
-
-    certificate_img.save(f"{name}_certificate.png")
+        certificate_img.save(f"certificates/{name}_certificate.png")
+        print("Certificate generated successfully!")
 
 
 if __name__ == "__main__":
-    # name = input("Enter your name: ")
-    name = "Karan Kumar Agrawal"
-    # names_list = ["Karan Kumar Agrawal", "Ayush Rai",
-    #               "Kartik Saraf", "Prikshit Sharma", "Manmohan Kumar"]
-    # for name in names_list:
-    #     generate_certificate(name)
-    generate_certificate(name)
-
-    print("Certificate generated successfully!")
+    app = certificategenerator()
