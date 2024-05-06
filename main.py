@@ -3,10 +3,18 @@ from PIL import Image, ImageDraw, ImageFont
 
 class certificategenerator:
     def __init__(self):
-        # self.name = input("Enter your name: ")
-        self.templateno = int(input("Enter template number: "))
-        self.name = "Karan Kumar Agrawal"
-        self.generate_certificate(self.name, self.templateno)
+        self.templateno = 1
+        self.name = input(
+            '''Enter your name (it can be a list seperated by "," as well): ''')
+        print(self.name)
+        print(type(self.name))
+
+        print(self.name.split(','))
+        name = self.name.split(',')
+        print(type(name))
+
+        for fullname in name:
+            self.generate_certificate(fullname.strip(), self.templateno)
 
     def generate_certificate(self, name, templateno):
         if (templateno == 1):
