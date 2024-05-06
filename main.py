@@ -1,4 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
+import os
 
 
 class certificategenerator:
@@ -18,6 +19,8 @@ class certificategenerator:
 
     def generate_certificate(self, name, templateno):
         if (templateno == 1):
+            if not os.path.exists('templates'):
+                os.makedirs('templates')
             certificate_img = Image.open("templates/certificate_template.png")
             draw = ImageDraw.Draw(certificate_img)
             font_path = "fonts/BrittanySignature.ttf"
@@ -29,6 +32,8 @@ class certificategenerator:
             draw.text(text_position, text, fill="black", font=font)
 
         elif (templateno == 2):
+            if not os.path.exists('templates'):
+                os.makedirs('templates')
             certificate_img = Image.open("templates/certificate_template2.png")
             draw = ImageDraw.Draw(certificate_img)
             font_path = "fonts/horizon.otf"
@@ -53,6 +58,8 @@ class certificategenerator:
                 (certificate_img.width - draw.textlength(certificate_text, font=certificate_font)) / 2, 2600)
             draw.text(certificate_text_position, certificate_text,
                       fill="white", font=certificate_font)
+        if not os.path.exists('certificates'):
+            os.makedirs('certificates')
 
         certificate_img.save(f"certificates/{name}_certificate.png")
         print("Certificate generated successfully!")
