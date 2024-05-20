@@ -1,4 +1,4 @@
-# Certificate Generator
+# CertX
 
 Certificate Generator is a Python application that facilitates the creation of certificates with customizable templates and fonts. The application offers a user-friendly interface to input names, select templates and fonts, and generate certificates effortlessly.
 
