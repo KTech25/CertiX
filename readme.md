@@ -1,64 +1,55 @@
-# Certificate Name Writing Program
+# Certificate Generator
 
-This is a simple Python program that generates certificate names from a list of names and formats them into a predefined certificate template.
+Certificate Generator is a Python application that facilitates the creation of certificates with customizable templates and fonts. The application offers a user-friendly interface to input names, select templates and fonts, and generate certificates effortlessly.
 
 ## Features
 
-- **Input**: Accepts a list of names as input.
-- **Output**: Generates formatted certificate names.
-- **Customization**: Allows customization of the certificate template.
-- **Ease of Use**: User-friendly interface.
+- **Template Management:** Easily add custom templates to the application.
+- **Font Selection:** Choose from a variety of fonts to personalize certificates.
+- **Flexible Name Input:** Enter names manually or load them from an Excel file.
+- **Certificate Generation:** Generate certificates with custom names in just a few clicks.
+- **Error Handling:** The application provides error messages to guide users in case of issues.
 
-## Getting Started
+## Requirements
 
-### Prerequisites
+- Python 3.x
+- PIL (Python Imaging Library)
+- Tkinter (Python GUI Library)
+- Pandas (for Excel file support)
+- oauth2client (for Google Sheets support)
 
-- Python 3.x installed on your system.
+## Installation
 
-### Installation
+1. Clone the repository:
 
-1. Clone this repository to your local machine:
+2. Install the required dependencies:
 
-    ```bash
-    git clone https://github.com/your_username/certificate-name-writer.git
-    ```
-
-2. Navigate to the project directory:
-
-    ```bash
-    cd certificate-name-writer
-    ```
-
-3. Create a `templates` folder in the root directory of the project.
-
-4. Put the template of the certificate in the `templates` folder.
-
-5. Install any dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
 
 ## Usage
 
-1. Run the program:
+1. Run the application: python main.py
 
-    ```bash
-    python certificate_writer.py
-    ```
+2. **Adding Templates and Fonts:**
+   - Click the "Add Template" button to add custom certificate templates.
+   - Click the "Add Font" button to add custom fonts for certificate text.
 
-2. Follow the on-screen instructions to input the list of names.
+3. **Entering Names:**
+   - Enter names manually into the text field, separated by commas.
+   - Alternatively, load names from an Excel file using the "Load Names from Excel" button.
 
-3. After inputting the names, the program will generate the formatted certificate names.
+4. **Selecting Template and Font:**
+   - Choose a template from the dropdown menu.
+   - Select a font for the certificate text from the font dropdown menu.
 
-## Customization
-
-You can customize the certificate template by modifying the template file in the `templates` folder.
+5. **Generating Certificates:**
+   - Click the "Generate Certificates" button to create certificates for the entered names.
 
 ## Contributing
 
-Contributions are welcome! If you'd like to contribute to this project, feel free to submit a pull request.
+Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request with your changes.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
