@@ -306,8 +306,6 @@ class CertificateGenerator:
             messagebox.showerror(
                 "Error", "The selected file does not contain a 'Name' column.")
 
-   
-
 
 if __name__ == "__main__":
     root = tk.Tk()
