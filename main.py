@@ -103,7 +103,7 @@ class CertificateGenerator:
                 # Save the certificate
                 output_dir = "generated_certificates"
                 os.makedirs(output_dir, exist_ok=True)
-                certificate_img.save(f"{output_dir}/{name}_certificate.png")
+                template_img.save(f"{output_dir}/{name}.png")
 
             except Exception as e:
                 messagebox.showerror("Error", f"An error occurred while generating certificate for {name}: {e}")
