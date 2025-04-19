@@ -50,12 +50,21 @@ class CertificateGenerator:
         tk.Label(self.root, text="Y Offset for Course:").grid(row=7, column=0, sticky="e")
         tk.Entry(self.root, textvariable=self.text_y_offset_course, width=10).grid(row=7, column=1, sticky="w")
 
-        # Font size controls
-        tk.Button(self.root, text="Increase Font Size", command=self.increase_font_size).grid(row=8, column=1, sticky="w")
-        tk.Button(self.root, text="Decrease Font Size", command=self.decrease_font_size).grid(row=8, column=1, sticky="e")
+        # Font size label
+        tk.Label(self.root, text="Font Size:").grid(row=8, column=0, sticky="e")
 
-        self.font_size_label = tk.Label(self.root, text=f"{self.font_size}")
-        self.font_size_label.grid(row=8, column=0)
+        # Font size entry (user can type here)
+        self.font_size_var = tk.IntVar(value=self.font_size)
+        self.font_size_entry = tk.Entry(self.root, textvariable=self.font_size_var, width=5)
+        self.font_size_entry.grid(row=8, column=1)
+
+        # Buttons to increase/decrease font size
+        tk.Button(self.root, text="+", width=3, command=self.increase_font_size).grid(row=8, column=2, sticky="w")
+        tk.Button(self.root, text="-", width=3, command=self.decrease_font_size).grid(row=8, column=2, sticky="e")
+
+        # Update preview on manual entry
+        self.font_size_entry.bind("<Return>", self.update_font_size_from_entry)
+
 
         # Generate and preview buttons
         tk.Button(self.root, text="Generate Certificates", command=self.generate_certificates).grid(row=9, column=0, columnspan=2)
@@ -65,6 +74,27 @@ class CertificateGenerator:
         file_path = filedialog.askopenfilename(title="Select Template Image", filetypes=[("Image files", ".png;.jpg;*.jpeg")])
         if file_path:
             self.selected_template.set(file_path)
+    def increase_font_size(self):
+        self.font_size += 1
+        self.font_size_var.set(self.font_size)
+        self.show_live_preview()
+
+    def decrease_font_size(self):
+        if self.font_size > 1:
+            self.font_size -= 1
+            self.font_size_var.set(self.font_size)
+            self.show_live_preview()
+
+    def update_font_size_from_entry(self, event=None):
+        try:
+            new_size = int(self.font_size_var.get())
+            if new_size > 0:
+                self.font_size = new_size
+                self.show_live_preview()
+            else:
+                messagebox.showwarning("Invalid Input", "Font size must be greater than 0.")
+        except ValueError:
+            messagebox.showwarning("Invalid Input", "Please enter a valid number.")
 
     def browse_font(self):
         file_path = filedialog.askopenfilename(title="Select Font File", filetypes=[("Font files", "*.ttf")])
@@ -121,15 +151,7 @@ class CertificateGenerator:
             else:
                 messagebox.showerror("Error", "The Excel file does not contain a 'Names' column.")
 
-    def increase_font_size(self):
-        self.font_size += 2
-        self.font_size_label.config(text=f"{self.font_size}")
-        self.show_live_preview()
-
-    def decrease_font_size(self):
-        self.font_size -= 2
-        self.font_size_label.config(text=f"{self.font_size}")
-        self.show_live_preview()
+    
 
     def show_live_preview(self, event=None):
         if not self.selected_template.get() or not self.selected_font.get():
@@ -142,13 +164,13 @@ class CertificateGenerator:
             self.preview_label.pack()
 
         try:
-            # Load the template and create a live preview
+            # Load the template
             template_img = Image.open(self.selected_template.get())
             draw = ImageDraw.Draw(template_img)
             font = ImageFont.truetype(self.selected_font.get(), self.font_size)
 
             # Name position preview
-            name = self.name_input.get().split(',')[0].strip()  # Preview the first name
+            name = self.name_input.get().split(',')[0].strip()
             name_position = (
                 (template_img.width - draw.textlength(name, font=font)) / 2 + self.text_x_offset.get(),
                 (template_img.height / 2) + self.text_y_offset.get()
@@ -163,15 +185,17 @@ class CertificateGenerator:
             )
             draw.text(course_position, course_name, fill="black", font=font)
 
+            # Resize the image for preview window (fit within max dimensions)
+            max_preview_size = (800, 600)  # Customize as needed
+            template_img.thumbnail(max_preview_size, Image.Resampling.LANCZOS)
+
             # Display preview
             preview_img = ImageTk.PhotoImage(template_img)
             self.preview_label.config(image=preview_img)
-            self.preview_label.image = preview_img  # Keep reference to avoid garbage collection
+            self.preview_label.image = preview_img  # Prevent GC
 
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred during the live preview: {e}")
-
-
 
 root = tk.Tk()
 app = CertificateGenerator(root)

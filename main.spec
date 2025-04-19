@@ -1,21 +1,24 @@
-# -*- mode: python ; coding: utf-8 -*-
-
-
+# Define the Analysis step
 a = Analysis(
     ['main.py'],
     pathex=[],
-    binaries=[],
+    binaries=[
+        # Add the python313.dll file from your Python directory
+        ('C:\\Users\\karan\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll', '_internal')
+    ],
     datas=[],
     hiddenimports=[],
     hookspath=[],
-    hooksconfig={},
     runtime_hooks=[],
     excludes=[],
     noarchive=False,
     optimize=0,
 )
+
+# Define the PYZ (Python bytecode archive) step
 pyz = PYZ(a.pure)
 
+# Define the EXE step
 exe = EXE(
     pyz,
     a.scripts,
@@ -33,6 +36,8 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
 )
+
+# Define the COLLECT step
 coll = COLLECT(
     exe,
     a.binaries,
@@ -41,4 +46,5 @@ coll = COLLECT(
     upx=True,
     upx_exclude=[],
     name='main',
+    tree='_internal',  # Ensure the DLL goes into the _internal folder in the dist
 )
