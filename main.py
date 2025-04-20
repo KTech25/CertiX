@@ -220,7 +220,7 @@ class CertificateGenerator:
 
                 
                 if self.want_to_mail.get():
-                    # send_certificate(email, name, certificate_path)
+                    send_certificate(email, name, certificate_path)
                     pass
                     
 
